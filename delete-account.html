@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Deletion - Sooriyan</title>
+    <!-- Modern Typography: Google Fonts (Outfit & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Branding colors - Sooriyan Red */
+            --brand-color: #B11226;
+            --brand-color-dark: #8A0C20;
+            --brand-color-light: #fdf2f4;
+            --brand-border: #f8d7da;
+            --text-main: #1a1a1a;
+            --text-muted: #6b7280;
+            --bg-body: #f4f5f7;
+            --bg-card: #ffffff;
+            
+            /* Form colors */
+            --input-border: #d1d5db;
+            --input-focus: #B11226;
+            --error-color: #dc2626;
+            --success-color: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 3rem 1.5rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding: 3.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, var(--brand-color), var(--brand-color-dark));
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 3rem;
+            box-shadow: 0 12px 20px -8px rgba(177, 18, 38, 0.3);
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .header-icon svg {
+            width: 36px;
+            height: 36px;
+            fill: #ffffff;
+        }
+
+        .header-card h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-card p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid var(--bg-body);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.04);
+            border-color: rgba(177, 18, 38, 0.15);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Delay animation for sections */
+        section:nth-of-type(1) { animation-delay: 0.1s; }
+        section:nth-of-type(2) { animation-delay: 0.2s; }
+        section:nth-of-type(3) { animation-delay: 0.3s; }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--bg-body);
+        }
+
+        .section-title svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--brand-color);
+        }
+
+        .section-content {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .section-content p {
+            margin-bottom: 1rem;
+        }
+
+        .section-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .warning-box {
+            background-color: var(--brand-color-light);
+            border-left: 4px solid var(--brand-color);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .warning-box p {
+            color: var(--brand-color-dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .warning-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .warning-box li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #5f101a;
+            font-size: 0.95rem;
+        }
+
+        .warning-box li::before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background-color: #fafafa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(177, 18, 38, 0.15);
+            background-color: #ffffff;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            cursor: pointer;
+        }
+
+        .form-check input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--brand-color);
+            cursor: pointer;
+        }
+
+        .form-check label {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .btn-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--brand-color), var(--brand-color-dark));
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(177, 18, 38, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(177, 18, 38, 0.35);
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        .btn-submit svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            fill: currentColor;
+        }
+
+        /* Success & Info states */
+        .info-card {
+            display: none;
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .info-card h4 {
+            color: var(--success-color);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .info-card p {
+            font-size: 0.95rem;
+            color: #166534;
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .copy-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            justify-content: space-between;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .copy-box span {
+            font-size: 0.85rem;
+            font-family: monospace;
+            color: #334155;
+            word-break: break-all;
+        }
+
+        .btn-copy {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* App Instructions Steps */
+        ol.steps {
+            list-style: none;
+            counter-reset: steps-counter;
+            padding-left: 0;
+        }
+
+        ol.steps li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ol.steps li::before {
+            content: counter(steps-counter);
+            counter-increment: steps-counter;
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+            background-color: var(--brand-color-light);
+            border: 1px solid var(--brand-border);
+            color: var(--brand-color-dark);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--brand-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--brand-color-dark);
+            text-decoration: underline;
+        }
+
+        .back-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .footer-banner {
+            background-color: var(--brand-color-light);
+            border: 1px solid var(--brand-border);
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            text-align: center;
+            margin-top: 3.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .footer-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px -4px rgba(177, 18, 38, 0.15);
+        }
+
+        .footer-banner p {
+            color: var(--brand-color-dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-banner span {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .container {
+                padding: 2rem 1.5rem;
+                border-radius: 20px;
+            }
+            .header-card {
+                padding: 2rem 1.25rem;
+                margin-bottom: 2rem;
+            }
+            .header-card h1 {
+                font-size: 1.75rem;
+            }
+            section {
+                padding: 1.5rem;
+                margin-bottom: 1.75rem;
+            }
+            .section-title {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Card -->
+        <div class="header-card">
+            <div class="header-icon">
+                <!-- Delete sweep / Trash SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </div>
+            <h1>Delete Sooriyan Account</h1>
+            <p>Request account and data removal</p>
+        </div>
+
+        <!-- Section 1: Warning details -->
+        <section>
+            <div class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                <span>Important Information About Deletion</span>
+            </div>
+            <div class="section-content">
+                <div class="warning-box">
+                    <p>This action is permanent and cannot be undone</p>
+                    <ul>
+                        <li>All your profile information (username, email, settings) will be permanently deleted.</li>
+                        <li>Any stories, content, or covers you have created will be permanently removed.</li>
+                        <li>You will lose access to your account immediately.</li>
+                        <li>Deletion requests are processed manually within 48 hours.</li>
+                    </ul>
+                </div>
+                <p>We respect your privacy and provide two ways to delete your account: directly in the mobile app, or by submitting a deletion request through the form below.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Online form for static page -->
+        <section>
+            <div class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>Submit Deletion Request</span>
+            </div>
+            <div class="section-content">
+                <form id="deletionForm" onsubmit="handleDeletionSubmit(event)">
+                    <div class="form-group">
+                        <label for="email">Registered Email Address *</label>
+                        <input type="email" id="email" class="form-control" placeholder="yourname@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">Username / User ID *</label>
+                        <input type="text" id="username" class="form-control" placeholder="Your Sooriyan username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">Reason for Deletion (Optional)</label>
+                        <textarea id="reason" class="form-control" placeholder="Please let us know how we can improve..."></textarea>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" id="confirm" required>
+                        <label for="confirm">I confirm that I want to permanently delete my Sooriyan account and all associated data.</label>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        Generate Deletion Email
+                    </button>
+                </form>
+
+                <!-- Success / Instruction Box -->
+                <div id="successCard" class="info-card">
+                    <h4>Email Template Generated!</h4>
+                    <p>We've prepared an email for you. If your email application didn't open automatically, please send a mail manually with the following details:</p>
+                    <div class="copy-box">
+                        <span id="mailRecipient">Recipient: support@sooriyan.com</span>
+                        <button class="btn-copy" onclick="copyText('support@sooriyan.com')">Copy</button>
+                    </div>
+                    <p style="margin-top: 1rem; font-weight: 500; font-size: 0.9rem;">
+                        Subject: Account Deletion Request - Sooriyan
+                    </p>
+                    <p id="mailBodyPreview" style="background-color: #ffffff; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 8px; font-family: monospace; font-size: 0.85rem; text-align: left; white-space: pre-wrap; margin-top: 0.5rem;"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: In-App deletion instructions -->
+        <section>
+            <div class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                <span>Delete Account Directly In the App</span>
+            </div>
+            <div class="section-content">
+                <p>For immediate, automated account deletion, you can delete your account directly inside the Sooriyan app:</p>
+                <ol class="steps">
+                    <li>Open the <strong>Sooriyan App</strong> on your device.</li>
+                    <li>Go to the <strong>Profile</strong> tab in the navigation menu.</li>
+                    <li>Tap on the <strong>Settings</strong> gear icon in the top right corner.</li>
+                    <li>Select <strong>Account Management</strong>.</li>
+                    <li>Tap on <strong>Delete Account</strong> at the bottom of the screen.</li>
+                    <li>Confirm your choice. Your account and content will be deleted instantly.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Navigation Links -->
+        <a href="index.html" class="back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Back to Privacy Policy
+        </a>
+
+        <!-- Footer Banner -->
+        <div class="footer-banner">
+            <p>Thank you for using Sooriyan.</p>
+            <span>If you have issues, contact support at <a href="mailto:support@sooriyan.com" style="color: var(--brand-color-dark); font-weight: 600; text-decoration: none;">support@sooriyan.com</a></span>
+        </div>
+    </div>
+
+    <script>
+        function handleDeletionSubmit(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const reason = document.getElementById('reason').value || "No reason provided.";
+            
+            const subject = encodeURIComponent("Account Deletion Request - Sooriyan");
+            
+            const bodyText = `Hello Sooriyan Support Team,
+
+I would like to request the permanent deletion of my Sooriyan account. Below are my registration details:
+
+Registered Email: ${email}
+Username/User ID: ${username}
+Reason for deletion: ${reason}
+
+I confirm that I understand this process is permanent and cannot be undone. Please delete all my profile information, user content, and associated logs.
+
+Thank you.`;
+
+            const mailtoUrl = `mailto:support@sooriyan.com?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+            
+            // Show the fallback/instruction box
+            document.getElementById('mailBodyPreview').textContent = bodyText;
+            document.getElementById('successCard').style.display = 'block';
+            
+            // Attempt to trigger the mail client
+            window.location.href = mailtoUrl;
+        }
+        
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied support email to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
